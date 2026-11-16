@@ -5,26 +5,22 @@ async function authUser(req, res, next) {
   const token = req.cookies.token;
 
   if (!token) {
-    res.status(401).json({ message: "Token not provided" });
+    return res.status(401).json({ message: "Token not provided" });
   }
 
-  const isTokenBlacklisted = await tokenBlacklistModel.findOne(token);
-
-  if (isTokenBlacklisted) {
-    return res.status(401).json({
-      message: "Token is invalid",
-    });
-  }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const isTokenBlacklisted = await tokenBlacklistModel.findOne({ token });
 
+    if (isTokenBlacklisted) {
+      return res.status(401).json({ message: "Token is invalid" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
 
-    next();
+    return next();
   } catch (err) {
-    return res.status(401).json({
-      message: "Invalid Token",
-    });
+    return res.status(401).json({ message: "Invalid Token" });
   }
 }
 
