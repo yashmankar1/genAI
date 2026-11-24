@@ -41,7 +41,10 @@ async function registerUserController(req, res) {
     },
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+  });
 
   res.status(201).json({
     message: "user created successfully",
@@ -76,7 +79,10 @@ async function loginUserController(req, res) {
     },
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+  });
   res.status(200).json({
     message: "User loggedIn successfully",
     user: {
