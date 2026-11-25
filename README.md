@@ -1,4 +1,4 @@
-Generative AI Learning 🚀
+Generative AI Website 🚀
 
 This repository contains my learning journey and practice code from the Generative AI.
 
