@@ -42,11 +42,7 @@ export async function logout() {
 }
 
 export async function getMe() {
-  try {
-    const response = await api.get("/api/auth/getme");
+  const response = await api.get("/api/auth/getme");
 
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  return response.data;
 }

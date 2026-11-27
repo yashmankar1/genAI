@@ -47,12 +47,21 @@ export const useAuth = () => {
 
   useEffect(() => {
     const getAndSetUser = async () => {
-      const data = await getMe();
-      setUser(data.user);
-      setLoading(false);
+      try {
+        const data = await getMe();
+        setUser(data.user);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          setUser(null);
+        } else {
+          console.error("Failed to fetch the authenticated user", error);
+        }
+      } finally {
+        setLoading(false);
+      }
     };
     getAndSetUser();
-  }, []);
+  }, [setLoading, setUser]);
 
   return { user, loading, handleLogin, handleRegister, handleLogout };
 };
