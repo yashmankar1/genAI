@@ -9,7 +9,7 @@ const Protected = ({ children }) => {
   if (loading) {
     return (
       <main>
-        <h1>Loading...</h1>
+        <h1>Loading....</h1>
       </main>
     );
   }
